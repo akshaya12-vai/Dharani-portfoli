@@ -28,7 +28,9 @@ app.add_middleware(
 app.include_router(contact.router)
 app.include_router(projects.router)
 app.include_router(visits.router)
-
+@app.get("/")
+def home():
+    return {"message": "Dharani Portfolio API is running successfully"}
 
 @app.get("/api/health")
 async def health():
@@ -39,7 +41,9 @@ async def health():
     except Exception as exc:  # pragma: no cover - simple diagnostic endpoint
         mongo_status = f"unreachable: {exc}"
     return {"status": "ok", "mongodb": mongo_status}
-
+@app.get("/health")
+def health():
+    return {"status": "healthy"}
 
 @app.on_event("shutdown")
 async def shutdown_event():
